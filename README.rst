@@ -31,6 +31,10 @@ extract and run::
 
   python setup.py build install
 
+To build from source on OS X using unixODBC via MacPorts::
+
+  python setup.py build install --macports
+
 Module Specific Behavior
 ========================
 

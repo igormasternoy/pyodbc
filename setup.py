@@ -144,8 +144,17 @@ def get_compiler_settings(version_str):
         settings['libraries'].append('odbc32')
 
     elif sys.platform == 'darwin':
-        # OS/X now ships with iODBC.
-        settings['libraries'].append('iodbc')
+
+        if '--macports' in sys.argv:
+            # OS/X using unixODBC via MacPorts.
+            sys.argv.remove('--macports')
+            settings['libraries'].append('odbc')
+            settings['include_dirs'] = ['/opt/local/include']
+            settings['library_dirs'] = ['/opt/local/lib']
+
+        else:
+            # OS/X now ships with iODBC.
+            settings['libraries'].append('iodbc')
 
         # Apple has decided they won't maintain the iODBC system in OS/X and has added deprecation warnings in 10.8.
         # For now target 10.7 to eliminate the warnings.
